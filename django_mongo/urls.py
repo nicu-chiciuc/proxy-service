@@ -18,10 +18,12 @@ from django.contrib import admin
 
 from users.urls import router as user_router
 from posts.urls import router as post_router
+from posts.urls import user_posts
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^api/v1/', include(user_router.urls)),
     url(r'^api/v1/', include(post_router.urls)),
+    url(r'^api/v1/', include(user_posts.urls)),
 ]
