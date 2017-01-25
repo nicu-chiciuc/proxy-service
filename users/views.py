@@ -22,6 +22,3 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return User.objects.all()
-
-
-
