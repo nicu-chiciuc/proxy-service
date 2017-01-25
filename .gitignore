@@ -50,6 +50,7 @@ htmlcov
 !.idea/rest_server_pad.iml
 !.idea/vcs.xml
 !.idea/webResources.xml
+.idea
 
 
 # Vim

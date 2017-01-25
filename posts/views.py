@@ -1,10 +1,11 @@
-from rest_framework import status
-from rest_framework.response import Response
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
 from rest_framework_mongoengine import viewsets
+from rest_framework_xml.parsers import XMLParser
+from rest_framework_xml.renderers import XMLRenderer
 
 from posts.models import Post
 from posts.serializers import PostSerializer
-from users.models import User
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -14,22 +15,8 @@ class PostViewSet(viewsets.ModelViewSet):
     '''
     lookup_field = 'id'
     serializer_class = PostSerializer
+    renderer_classes = (JSONRenderer, XMLRenderer)
+    parser_classes = (JSONParser, XMLParser)
 
     def get_queryset(self):
         return Post.objects.all()
-
-    def _assign_author(self, instance, author):
-        instance.author = User.objects.get(**author).to_dbref()
-        instance.save()
-        return instance
-
-    def _create(self, request, *args, **kwargs):
-        author = request.data.pop('author', None)
-        # if author is not None:
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        self.serializer.instance = self._assign_author(self.serializer.instance, author)
-
-        headers = self.get_success_headers(serializer.data)
-        return Response(serializer.data,  status=status.HTTP_201_CREATED, headers=headers)
