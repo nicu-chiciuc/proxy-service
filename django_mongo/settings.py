@@ -80,7 +80,7 @@ DATABASES = {
 }
 
 mongoengine.connect(
-    db="tumbleblog",
+    db="djangomongo",
     host="localhost"
 )
 
