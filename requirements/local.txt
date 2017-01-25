@@ -3,6 +3,8 @@
 
 coverage==4.3.4
 django-coverage-plugin==1.4
+django-cors-headers==2.0.0
+
 
 Sphinx==1.5.1
 django-extensions==1.7.5
