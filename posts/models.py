@@ -7,7 +7,7 @@ from users.models import User
 
 class Comment(EmbeddedDocument):
     content = StringField()
-    name = StringField(max_length=120)
+    author = ReferenceField(User, required=False)
 
 
 class Post(Document):
@@ -17,15 +17,6 @@ class Post(Document):
     title = StringField(max_length=120, required=True)
     tags = ListField(StringField(max_length=30))
 
-    meta = {
-        'allow_inheritance': True
-    }
-
-class TextPost(Post):
-    content = StringField()
-
-class ImagePost(Post):
-    image_path = StringField()
-
-class LinkPost(Post):
-    link_url = StringField()
+    content = StringField(null=True)
+    image_path = StringField(null=True)
+    link_url = StringField(null=True)
